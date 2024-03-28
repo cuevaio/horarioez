@@ -1,8 +1,11 @@
 "use client";
+
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ArrowBigDownIcon } from "lucide-react";
+import { GithubIcon } from "@/components/ui/github";
+import { Button } from "@/components/ui/button";
 
 export default function Page() {
   return (
@@ -12,13 +15,25 @@ export default function Page() {
         <iframe
           width="640"
           height="360"
-          src="https://www.youtube.com/embed/c3Qx8oOA6B4"
-          title="Horario EZ"
+          src="https://www.youtube.com/embed/uQ-DevFsYHw"
+          title="Horario EZ en 120 segundos"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
           className="mx-auto w-full sm:w-1/2 p-4"
         ></iframe>
+      </div>
+      <div className="flex items-center justify-center w-full my-5">
+        <Button variant="secondary" asChild>
+          <a
+            href="https://github.com/caverneio/horarioez"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GithubIcon className="w-6 h-6 inline-block mr-2" />
+            Proudly open-source
+          </a>
+        </Button>
       </div>
     </div>
   );
