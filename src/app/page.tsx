@@ -37,8 +37,7 @@ function LampDemo() {
         }}
         className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
       >
-        Tu horario UTEC <br />
-        en Google Calendar
+        Horario EZ
       </motion.h1>
 
       <motion.p
@@ -51,17 +50,18 @@ function LampDemo() {
         }}
         className="mt-4 text-center text-lg text-slate-300"
       >
-        Lleva tu horario de clases de UTEC a Google Calendar con un par de clics
+        Tu horario UTEC en Google Calendar al toque!
       </motion.p>
 
-      <motion.a initial={{ opacity: 0, y: 100 }}
+      <motion.a
+        initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{
           delay: 0.5,
           duration: 0.8,
           ease: "easeInOut",
         }}
-        href="/auth/signin"
+        href="/go"
         className="my-8 bg-gradient-to-br from-primary to-primary-light py-4 px-8 rounded-lg text-white text-xl font-medium tracking-tight text-center md:text-2xl"
       >
         Comenzar

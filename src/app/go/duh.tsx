@@ -46,7 +46,7 @@ export function Page() {
   });
 
   return (
-    <div className="">
+    <div className="container">
       <h1 className="text-4xl font-bold">Horario EZ</h1>
       <p>
         Copia tu consolidado de matrícula del{" "}
