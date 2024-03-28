@@ -1,6 +1,4 @@
-import type { IconProps } from ".";
-
-export const GithubIcon = (props: IconProps) => (
+export const GithubIcon = (props: React.HTMLAttributes<SVGElement>) => (
   <svg viewBox="0 0 438.549 438.549" {...props}>
     <path
       fill="currentColor"
