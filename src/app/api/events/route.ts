@@ -1,3 +1,4 @@
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 const WEEKLY = "RRULE:FREQ=WEEKLY;COUNT=14";
@@ -77,70 +78,67 @@ export const POST = async (req: Request) => {
       "Sáb.": "2024-04-13",
     };
 
-    for (let i = 0; i < schedule.length; i++) {
-      const course = schedule[i];
-      await Promise.all(
-        course.events.map(async (event) => {
-          const weekDaysDict =
-            event.customWeek === "B" ? weekBDaysDict : weekADaysDict;
+    await Promise.all(
+      schedule.map(async (course, i) => {
+        await Promise.all(
+          course.events.map(async (event) => {
+            const weekDaysDict =
+              event.customWeek === "B" ? weekBDaysDict : weekADaysDict;
 
-          const createEventResponse = await fetch(
-            `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`,
-            {
-              method: "POST",
-              headers: {
-                Authorization,
-                "content-type": "application/json",
-              },
-              body: JSON.stringify({
-                summary: course.name,
-                start: {
-                  dateTime:
-                    weekDaysDict[event.day] + "T" + event.start + ":0.000",
-                  timeZone: "America/Lima",
+            const createEventResponse = await fetch(
+              `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization,
+                  "content-type": "application/json",
                 },
-                end: {
-                  dateTime:
-                    weekDaysDict[event.day] + "T" + event.end + ":0.000",
-                  timeZone: "America/Lima",
-                },
-                location: event.room,
-                colorId: i,
-                recurrence: [
-                  event.customWeek === undefined ? WEEKLY : BIWEEKLY,
-                ],
-                description: `<div>
-                <p><strong>${course.id} - ${course.name}</strong></p>
-                <p>${event.type}</p>
-                <p><strong>Aula:</strong> ${event.room}</p>
-                <p><strong>Profes_r:</strong> ${course.teacher}</p>
-                ${
-                  !!course.section &&
-                  "<p><strong>Sección:</strong>" + course.section + "</p>"
-                }
-                ${
-                  !!course.group &&
-                  "<p><strong>Grupo:</strong>" + course.group + "</p>"
-                }
-                <p><strong>Créditos:</strong> ${course.credits}</p>
-                
-                </div>`,
-              }),
-            }
-          );
-
-          const createEventData = await createEventResponse.json();
-          if (createEventResponse.ok) {
-            console.error(createEventData);
-            return Response.json(
-              { message: "Error creando eventos para el curso " + course.id },
-              { status: 500 }
+                body: JSON.stringify({
+                  summary: course.name,
+                  start: {
+                    dateTime:
+                      weekDaysDict[event.day] + "T" + event.start + ":0.000",
+                    timeZone: "America/Lima",
+                  },
+                  end: {
+                    dateTime:
+                      weekDaysDict[event.day] + "T" + event.end + ":0.000",
+                    timeZone: "America/Lima",
+                  },
+                  location: event.room,
+                  colorId: i,
+                  recurrence: [
+                    event.customWeek === undefined ? WEEKLY : BIWEEKLY,
+                  ],
+                  description: `<div><p><strong>${course.id} - ${
+                    course.name
+                  }</strong></p><p>${event.type}</p><p><strong>Aula:</strong> ${
+                    event.room
+                  }</p><p><strong>Profes_r:</strong> ${course.teacher}</p>${
+                    !!course.section
+                      ? "<p><strong>Sección:</strong>" + course.section + "</p>"
+                      : ""
+                  }${
+                    !!course.group &&
+                    "<p><strong>Grupo:</strong>" + course.group + "</p>"
+                  }<p><strong>Créditos:</strong> ${course.credits}</p></div>`,
+                }),
+              }
             );
-          }
-          console.log(createEventData);
-        })
-      );
-    }
+
+            const createEventData = await createEventResponse.json();
+            if (createEventResponse.ok) {
+              console.error(createEventData);
+              return Response.json(
+                { message: "Error creando eventos para el curso " + course.id },
+                { status: 500 }
+              );
+            }
+            console.log(createEventData);
+          })
+        );
+      })
+    );
 
     return Response.json({ ok: true });
   } catch (error) {
