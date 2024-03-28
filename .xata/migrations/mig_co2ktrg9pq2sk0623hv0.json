@@ -1,0 +1,29 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2ktrg9pq2sk0623hv0",
+    "operations": [
+      {
+        "add_column": {
+          "table": "users",
+          "column": {
+            "pk": false,
+            "name": "email",
+            "type": "text",
+            "check": {
+              "name": "users_xata_email_length_email",
+              "constraint": "LENGTH(\"email\") <= 2048"
+            },
+            "unique": true,
+            "comment": "{\"xata.type\":\"email\"}",
+            "nullable": true
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2ktrg9pq2sk0623hv0",
+  "parent": "mig_co2ktmdlhinc746melh0",
+  "startedAt": "2024-03-28T11:05:18.606401Z"
+}

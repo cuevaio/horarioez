@@ -1,0 +1,24 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2l0no9pq2sk0623i2g",
+    "operations": [
+      {
+        "add_column": {
+          "table": "google_oauth_accounts",
+          "column": {
+            "pk": false,
+            "name": "expiresAt",
+            "type": "timestamptz",
+            "unique": false,
+            "nullable": true
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2l0no9pq2sk0623i2g",
+  "parent": "mig_co2l0kvr3lqqdgpa9pcg",
+  "startedAt": "2024-03-28T11:11:27.70956Z"
+}

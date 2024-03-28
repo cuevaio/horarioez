@@ -1,0 +1,21 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2l3oo9pq2sk0623i5g",
+    "operations": [
+      {
+        "alter_column": {
+          "up": "(SELECT CASE WHEN \"expiresAt\" IS NULL THEN now() ELSE \"expiresAt\" END)",
+          "down": "\"expiresAt\"",
+          "table": "google_oauth_accounts",
+          "column": "expiresAt",
+          "nullable": false
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2l3oo9pq2sk0623i5g",
+  "parent": "mig_co2l2gfr3lqqdgpa9peg",
+  "startedAt": "2024-03-28T11:17:56.893019Z"
+}

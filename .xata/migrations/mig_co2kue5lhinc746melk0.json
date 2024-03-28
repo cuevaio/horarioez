@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2kue5lhinc746melk0",
+    "operations": [
+      {
+        "rename_table": {
+          "to": "oauth_accounts",
+          "from": "oauth_account"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2kue5lhinc746melk0",
+  "parent": "mig_co2kubvr3lqqdgpa9pag",
+  "startedAt": "2024-03-28T11:06:33.041953Z"
+}

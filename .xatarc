@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://horarioez-52r9oj.us-east-1.xata.sh/db/ez",
+  "codegen": {
+    "output": "src/lib/db/index.ts"
+  }
+}

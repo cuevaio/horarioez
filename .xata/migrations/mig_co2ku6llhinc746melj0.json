@@ -1,0 +1,29 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2ku6llhinc746melj0",
+    "operations": [
+      {
+        "add_column": {
+          "table": "users",
+          "column": {
+            "pk": false,
+            "name": "profilePictureUrl",
+            "type": "text",
+            "check": {
+              "name": "users_xata_string_length_profilePictureUrl",
+              "constraint": "LENGTH(\"profilePictureUrl\") <= 2048"
+            },
+            "unique": false,
+            "comment": "{\"xata.type\":\"string\"}",
+            "nullable": true
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2ku6llhinc746melj0",
+  "parent": "mig_co2ku009pq2sk0623i10",
+  "startedAt": "2024-03-28T11:06:02.861967Z"
+}

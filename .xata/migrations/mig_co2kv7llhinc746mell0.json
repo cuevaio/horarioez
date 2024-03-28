@@ -1,0 +1,31 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2kv7llhinc746mell0",
+    "operations": [
+      {
+        "add_column": {
+          "table": "oauth_accounts",
+          "column": {
+            "pk": false,
+            "name": "user",
+            "type": "text",
+            "unique": false,
+            "comment": "{\"xata.link\":\"users\"}",
+            "nullable": true,
+            "references": {
+              "name": "user_link",
+              "table": "users",
+              "column": "xata_id",
+              "on_delete": "RESTRICT"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2kv7llhinc746mell0",
+  "parent": "mig_co2kue5lhinc746melk0",
+  "startedAt": "2024-03-28T11:08:14.643756Z"
+}

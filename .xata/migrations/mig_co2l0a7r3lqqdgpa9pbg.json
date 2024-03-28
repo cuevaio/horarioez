@@ -1,0 +1,29 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2l0a7r3lqqdgpa9pbg",
+    "operations": [
+      {
+        "add_column": {
+          "table": "google_oauth_accounts",
+          "column": {
+            "pk": false,
+            "name": "googleUserId",
+            "type": "text",
+            "check": {
+              "name": "google_oauth_accounts_xata_string_length_googleUserId",
+              "constraint": "LENGTH(\"googleUserId\") <= 2048"
+            },
+            "unique": true,
+            "comment": "{\"xata.type\":\"string\"}",
+            "nullable": true
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2l0a7r3lqqdgpa9pbg",
+  "parent": "mig_co2kvmllhinc746melm0",
+  "startedAt": "2024-03-28T11:10:32.400833Z"
+}

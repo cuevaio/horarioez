@@ -1,0 +1,24 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2l2gfr3lqqdgpa9peg",
+    "operations": [
+      {
+        "add_column": {
+          "table": "sessions",
+          "column": {
+            "pk": false,
+            "name": "expiresAt",
+            "type": "timestamptz",
+            "unique": false,
+            "nullable": true
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2l2gfr3lqqdgpa9peg",
+  "parent": "mig_co2l2cvr3lqqdgpa9pdg",
+  "startedAt": "2024-03-28T11:15:13.934206Z"
+}

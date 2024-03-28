@@ -1,0 +1,21 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co2l47nr3lqqdgpa9pfg",
+    "operations": [
+      {
+        "alter_column": {
+          "up": "(SELECT CASE WHEN \"expiresAt\" IS NULL THEN now() ELSE \"expiresAt\" END)",
+          "down": "\"expiresAt\"",
+          "table": "sessions",
+          "column": "expiresAt",
+          "nullable": false
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co2l47nr3lqqdgpa9pfg",
+  "parent": "mig_co2l3oo9pq2sk0623i5g",
+  "startedAt": "2024-03-28T11:18:55.168882Z"
+}
