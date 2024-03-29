@@ -37,6 +37,7 @@ export default function RootLayout({
             <Toaster richColors closeButton />
           </div>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
