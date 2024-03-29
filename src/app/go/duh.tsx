@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import YapeQR from "./yape-qr.png";
+import ConsolidadoImg from "./consolidado.png";
 
 export function Page() {
   const [rawSchedule, setRawSchedule] = React.useState("");
@@ -106,39 +107,46 @@ export function Page() {
         >
           Sístema Académico
         </a>{" "}
-        y págalo aquí abajo:
+        sín los headers y pégalo en el input de abajo.
       </p>
+      <Image
+        src={ConsolidadoImg}
+        alt="Consolidado de matrícula"
+        width={800}
+        height={400}
+      />
       <div className="mt-2 mb-8">
         <Label htmlFor="schedule">Consolidado de matrícula</Label>
         <Textarea
+          placeholder="Ctrl + V aquí..."
           id="schedule"
           value={rawSchedule}
           onChange={(event) => setRawSchedule(event.target.value)}
           className="mt-2"
         />
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <div>
-          <Label>Cursos Identificados</Label>
-          <div className="h-96 overflow-auto border rounded-lg p-4 bg-muted mt-2 text-muted-foreground space-y-2">
-            {parsedSchedule.map((course) => (
-              <h2 key={course.id}>
-                <CheckIcon className="w-4 h-4 inline-block mr-2 text-primary" />
-                {course.name}
-              </h2>
-            ))}
+      {rawSchedule && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div>
+            <Label>Cursos Identificados</Label>
+            <div className="h-96 overflow-auto border rounded-lg p-4 bg-muted mt-2 text-muted-foreground space-y-2">
+              {parsedSchedule.map((course) => (
+                <h2 key={course.id}>
+                  <CheckIcon className="w-4 h-4 inline-block mr-2 text-primary" />
+                  {course.name}
+                </h2>
+              ))}
+            </div>
+          </div>
+          <div>
+            <Label>Parsed data</Label>
+            <pre className="h-96 overflow-auto border rounded-lg p-4 bg-muted mt-2 text-muted-foreground">
+              {JSON.stringify(parsedSchedule, undefined, 2)}
+            </pre>
           </div>
         </div>
-        <div>
-          <Label>Parsed data</Label>
-          <pre className="h-96 overflow-auto border rounded-lg p-4 bg-muted mt-2 text-muted-foreground">
-            {JSON.stringify(parsedSchedule, undefined, 2)}
-          </pre>
-        </div>
-      </div>
-
-      <div className="flex justify-center mt-8 space-x-8">
+      )}
+      <div className="grid sm:grid-cols-2 gap-4 my-8">
         <Button
           onClick={() => createCalendarMutation.mutate()}
           size="lg"

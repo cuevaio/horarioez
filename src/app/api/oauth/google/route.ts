@@ -36,7 +36,6 @@ export const GET = async (req: NextRequest) => {
     const codeVerifier = cookies().get("codeVerifier")?.value;
     const savedState = cookies().get("state")?.value;
 
-    console.log({ codeVerifier, savedState, state });
 
     if (!codeVerifier || !savedState) {
       return Response.json(
@@ -70,19 +69,12 @@ export const GET = async (req: NextRequest) => {
         method: "GET",
       }
     );
-    console.log({ accessToken, idToken, accessTokenExpiresAt, refreshToken });
 
     const googleData = (await googleRes.json()) as GoogleUser;
 
-    console.log("google data", googleData);
-
     const user = await xata.db.users.filter({ id: googleData.id }).getFirst();
 
-    console.debug("User", user);
-
     if (!user) {
-      console.log("Creating user", user);
-
       await xata.db.users.create({
         email: googleData.email,
         id: googleData.id,
