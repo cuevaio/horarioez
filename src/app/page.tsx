@@ -86,6 +86,7 @@ export default function Page() {
               </a>{" "}
               y verificar que no hay nada malicioso. <br /> Para continuar, dale
               click a &quot;Avanzado&quot; y luego a &quot;Ir a utec.fyi&quot;.
+              No olvides marcar la casilla de permisos para Google Calendar.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
