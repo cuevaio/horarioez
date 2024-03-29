@@ -8,6 +8,14 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { GithubIcon } from "@/components/ui/github";
 import { Button } from "@/components/ui/button";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 import U1Img from "./u1.png";
 import U2Img from "./u2.jpeg";
 
@@ -51,6 +59,56 @@ export default function Page() {
             Gracias Tony! Me salvaste la vida con esto. ¡Sigue así!
           </p>
         </div>
+      </div>
+
+      <div className="container px-32 my-8">
+        <h2 className="font-bold text-4xl text-primary">FAQ</h2>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-primary-foreground text-lg">
+              ¿Por qué Google dice que no es seguro?
+            </AccordionTrigger>
+            <AccordionContent>
+              Te aparece el mensaje de &quot;Google no ha verificado esta
+              aplicación&quot; porque google <strong>aún</strong> no ha
+              verificado la aplicación. Esta se encuentra en proceso de
+              verificación, que puede tomar unas semanas. Esto se debe a que
+              usamos la API de Google Calendar para crear eventos en tu
+              calendario. La aplicación es Open Source, por lo que puedes
+              revisar el{" "}
+              <a
+                className="text-primary"
+                href="https://github.com/caverneio/horarioez"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                código fuente
+              </a>{" "}
+              y verificar que no hay nada malicioso. <br /> Para continuar, dale
+              click a &quot;Avanzado&quot; y luego a &quot;Ir a utec.fyi&quot;.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger className="text-primary-foreground text-lg">
+              Los cursos se repiten en mi calendario
+            </AccordionTrigger>
+            <AccordionContent>
+              Probablemente se deba a que has creado el horario más de una vez.
+              Cada horario se crea en un calendario distinto. Por lo tanto, no
+              debes eliminar evento por evento, sino un calendario completo.
+              Puedes eliminarlos manualmente desde Google Calendar siguiendo{" "}
+              <a
+                className="text-primary"
+                href="https://support.google.com/calendar/answer/37188?hl=en&co=GENIE.Platform%3DAndroid&oco=0"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                esta guía
+              </a>
+              .
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
       <div className="flex items-center justify-center w-full my-5">
