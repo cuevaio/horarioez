@@ -1,8 +1,8 @@
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
-const WEEKLY = "RRULE:FREQ=WEEKLY;COUNT=14";
-const BIWEEKLY = "RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=14";
+const WEEKLY = "RRULE:FREQ=WEEKLY;COUNT=16";
+const BIWEEKLY = "RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=8";
 
 import { validateRequest } from "@/lib/auth/validate-request";
 import { redirect } from "next/navigation";
