@@ -30,7 +30,7 @@ export default function Page() {
 
       <div className="flex flex-col w-full items-center">
         <h2 className="font-bold text-4xl italic text-primary text-center">
-          <span className="font-mono text-6xl">63</span> horarios creados
+          <span className="font-mono text-6xl">72</span> horarios creados
         </h2>
         <div className="grid grid-cols-3 w-2/3 gap-4 my-4">
           <p className="p-6 bg-muted rounded-lg col-span-2">
