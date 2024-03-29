@@ -64,7 +64,7 @@ export default function Page() {
       <div className="container px-32 my-8">
         <h2 className="font-bold text-4xl text-primary">FAQ</h2>
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
+          <AccordionItem value="item-a">
             <AccordionTrigger className="text-primary-foreground text-lg">
               ¿Por qué Google dice que no es seguro?
             </AccordionTrigger>
@@ -89,7 +89,19 @@ export default function Page() {
               No olvides marcar la casilla de permisos para Google Calendar.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
+
+          <AccordionItem value="item-b">
+            <AccordionTrigger className="text-primary-foreground text-lg">
+              ¿Es gratis?
+            </AccordionTrigger>
+            <AccordionContent>
+              Crear la primera semana de tu calendario es gratis. Considera
+              yapearme 5 so si quieres tener tu calendario hasta la semana 16.
+              :D
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-c">
             <AccordionTrigger className="text-primary-foreground text-lg">
               Los cursos se repiten en mi calendario
             </AccordionTrigger>
@@ -105,6 +117,26 @@ export default function Page() {
                 rel="noopener noreferrer"
               >
                 esta guía
+              </a>
+              .
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-d">
+            <AccordionTrigger className="text-primary-foreground text-lg">
+              ¿Qué datos se guardan?
+            </AccordionTrigger>
+            <AccordionContent>
+              Guardamos tu dirección correo y un contador de cuántos horarios se
+              han creado. No guardamos tu consolidado de matrícula ni tu horario
+              en sí. Cuando finalices, puedes desvincular tu cuenta de google a
+              la app siguiente{" "}
+              <a
+                className="text-primary"
+                href="https://support.google.com/accounts/answer/13533235?hl=en&sjid=3062595385943356500-SA#zippy=%2Cshare-access-to-your-google-account-with-a-third-party"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                estos pasos
               </a>
               .
             </AccordionContent>
