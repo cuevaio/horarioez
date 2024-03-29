@@ -1,20 +1,26 @@
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
-const WEEKLY = "RRULE:FREQ=WEEKLY;COUNT=16";
-const BIWEEKLY = "RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=8";
-
 import { validateRequest } from "@/lib/auth/validate-request";
+import { ScheduleSchema } from "@/parseSchedule";
 import { redirect } from "next/navigation";
 
 import { getXataClient } from "@/lib/db";
 const xata = getXataClient();
 
-export const POST = async () => {
+export const POST = async (req: Request) => {
   const { user } = await validateRequest();
 
   if (!user) {
     return redirect("/auth/signin");
+  }
+
+  const rawSchedule = await req.json();
+
+  const safeParsedSchedule = ScheduleSchema.safeParse(rawSchedule);
+
+  if (!safeParsedSchedule.success) {
+    return Response.json({ message: "Horario inválido" }, { status: 400 });
   }
 
   const oa = await xata.db.google_oauth_accounts.read(user.id);
@@ -27,14 +33,16 @@ export const POST = async () => {
     );
   }
 
-  if (userXata?.hasTested) {
+  if (!userXata) {
     return Response.json(
-      { message: "Ya create el calendario de prueba ;)" },
+      { message: "No se encontró un usuario" },
       { status: 400 }
     );
   }
 
   const Authorization = "Bearer " + oa.accessToken;
+
+  const schedule = safeParsedSchedule.data;
 
   try {
     const createCalendarResponse = await fetch(
@@ -75,161 +83,6 @@ export const POST = async () => {
       "Sáb.": "2024-04-13",
     };
 
-    const schedule = [
-      {
-        id: "GH0023",
-        name: "Business Communication",
-        teacher: "Neira Neira, Kenny",
-        credits: 2,
-        section: 4,
-        group: "Laboratorio 4.01",
-        events: [
-          {
-            day: "Lun.",
-            type: "Teoría",
-            start: "10:00",
-            end: "11:00",
-            room: "A101",
-          },
-          {
-            day: "Mar.",
-            type: "Laboratorio",
-            start: "12:00",
-            end: "14:00",
-            room: "A1002",
-          },
-        ],
-      },
-      {
-        id: "CI0047",
-        name: "Diseño Arquitectónico",
-        teacher: "Fantozzi Freire, Valeria Maria",
-        credits: 3,
-        section: 1,
-        group: "",
-        events: [
-          {
-            day: "Vi.",
-            type: "Teoría",
-            start: "15:00",
-            end: "16:00",
-            room: "A401",
-          },
-          {
-            day: "Sáb.",
-            type: "Teoría",
-            start: "10:00",
-            end: "12:00",
-            room: "A401",
-          },
-        ],
-      },
-      {
-        id: "CI0049",
-        name: "Modelación Aplicada en Transporte Urbano",
-        teacher: "Samaniego Barja, Walter",
-        credits: 3,
-        section: 1,
-        group: "Laboratorio 1.01",
-        events: [
-          {
-            day: "Jue.",
-            type: "Laboratorio",
-            start: "17:00",
-            end: "19:00",
-            room: "M602",
-          },
-          {
-            day: "Sáb.",
-            type: "Teoría",
-            start: "13:00",
-            end: "15:00",
-            room: "A705",
-          },
-        ],
-      },
-      {
-        id: "CI2012",
-        name: "Dinámica y Vibraciones",
-        teacher: "Vilca Córdova, Federico Omar",
-        credits: 4,
-        section: 2,
-        group: "",
-        events: [
-          {
-            day: "Lun.",
-            type: "Teoría",
-            start: "18:00",
-            end: "20:00",
-            room: "A706",
-          },
-          {
-            day: "Mié.",
-            type: "Teoría",
-            start: "18:00",
-            end: "20:00",
-            room: "A706",
-          },
-        ],
-      },
-      {
-        id: "CI4072",
-        name: "Hidráulica Superficial",
-        teacher: "Ramos Orlandino, Carmela Cristhy",
-        credits: 4,
-        section: 2,
-        group: "Laboratorio 2.01",
-        events: [
-          {
-            day: "Lun.",
-            type: "Teoría",
-            start: "08:00",
-            end: "10:00",
-            room: "M804",
-          },
-          {
-            day: "Mar.",
-            type: "Teoría",
-            start: "15:00",
-            end: "16:00",
-            room: "A704",
-          },
-          {
-            day: "Mié.",
-            type: "Laboratorio",
-            start: "12:00",
-            end: "16:00",
-            room: "L204",
-            customWeek: "A",
-          },
-        ],
-      },
-      {
-        id: "CI5006",
-        name: "Proyecto Final de Ingeniería Civil - Trabajo de Investigación II",
-        teacher: "Caicedo Murillo, Felix Andres",
-        credits: 4,
-        section: 3,
-        group: "",
-        events: [
-          {
-            day: "Vie.",
-            type: "Teoría Virtual",
-            start: "11:00",
-            end: "13:00",
-            room: "Virtual 115",
-          },
-          {
-            day: "Vie.",
-            type: "Teoría Virtual",
-            start: "17:00",
-            end: "19:00",
-            room: "Virtual 117",
-          },
-        ],
-      },
-    ];
-
     await Promise.all(
       schedule.map(async (course, i) => {
         await Promise.all(
@@ -259,9 +112,6 @@ export const POST = async () => {
                   },
                   location: event.room,
                   colorId: i,
-                  recurrence: [
-                    event.customWeek === undefined ? WEEKLY : BIWEEKLY,
-                  ],
                   description: `<div><p><strong>${course.id} - ${
                     course.name
                   }</strong></p><p>${event.type}</p><p><strong>Aula:</strong> ${
@@ -291,8 +141,11 @@ export const POST = async () => {
       })
     );
 
-    await userXata?.update({
-      hasTested: true,
+    await userXata.update({
+      calendarCreated: true,
+      calendarCount: {
+        $increment: 1,
+      },
     });
 
     return Response.json({ ok: true });

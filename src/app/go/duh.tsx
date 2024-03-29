@@ -68,6 +68,7 @@ export function Page() {
     mutationFn: async () => {
       const res = await fetch("/api/test-product", {
         method: "POST",
+        body: JSON.stringify(parsedSchedule),
       });
 
       if (!res.ok) {
@@ -81,7 +82,7 @@ export function Page() {
       toast.error(error.message);
     },
     onSuccess: () => {
-      toast.success("Calendario de prueba creado exitosamente", {
+      toast.success("Calendario semana 1 creado exitosamente", {
         action: {
           label: "Ver",
           onClick: () => {
@@ -176,8 +177,7 @@ export function Page() {
           variant="secondary"
           disabled={
             testProductMutation.isPending ||
-            (isPaidQuery.data?.isPaid === false &&
-              isPaidQuery.data?.hasTested === true)
+            isPaidQuery.data?.hasTested === true
           }
         >
           <Image
@@ -187,12 +187,20 @@ export function Page() {
             height={16}
             className="w-6 h-6 inline-block mr-2 bg-background rounded-full p-0.5"
           />
-          Crear calendario de prueba
+          Crear calendario (semana 1)
           {parsedSchedule.length === 0 ||
             (createCalendarMutation.isPending && (
               <Loader2Icon className="w-4 h-4 inline-block ml-2 animate-spin" />
             ))}
         </Button>
+      </div>
+
+      <div>
+        <p>
+          *Todos los usuario pueden crear los eventos de la primera semana de su
+          calendario totalmente gratis. Para crear tu calendario hasta la semana
+          16 debes pagar los 5so. ;)
+        </p>
       </div>
 
       {!isPaidQuery.isPending && isPaidQuery.data?.isPaid === false && (
