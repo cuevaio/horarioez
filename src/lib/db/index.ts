@@ -128,11 +128,32 @@ const tables = [
     name: "users",
     columns: [
       {
+        name: "calendarCount",
+        type: "int",
+        notNull: true,
+        unique: false,
+        defaultValue: "'0'::bigint",
+      },
+      {
+        name: "calendarCreated",
+        type: "bool",
+        notNull: true,
+        unique: false,
+        defaultValue: "false",
+      },
+      {
         name: "email",
         type: "text",
         notNull: false,
         unique: true,
         defaultValue: null,
+      },
+      {
+        name: "isPaid",
+        type: "bool",
+        notNull: true,
+        unique: false,
+        defaultValue: "false",
       },
       {
         name: "name",

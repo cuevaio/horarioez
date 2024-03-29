@@ -1,0 +1,25 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co34634fiil5rc1uacl0",
+    "operations": [
+      {
+        "add_column": {
+          "table": "users",
+          "column": {
+            "pk": false,
+            "name": "isPaid",
+            "type": "boolean",
+            "unique": false,
+            "default": "'false'",
+            "nullable": false
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co34634fiil5rc1uacl0",
+  "parent": "mig_co2l47nr3lqqdgpa9pfg",
+  "startedAt": "2024-03-29T04:26:52.866984Z"
+}

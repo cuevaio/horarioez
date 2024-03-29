@@ -8,12 +8,29 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { parseSchedule } from "@/parseSchedule";
 import { Button } from "@/components/ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import YapeQR from "./yape-qr.png";
 
 export function Page() {
   const [rawSchedule, setRawSchedule] = React.useState("");
   const parsedSchedule = parseSchedule(rawSchedule);
+
+  const isPaidQuery = useQuery({
+    queryKey: ["isPaid"],
+    queryFn: async () => {
+      const res = await fetch("/api/isPaid");
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+
+      return data.isPaid as boolean;
+    },
+  });
+
+  console.log(isPaidQuery);
 
   const createCalendarMutation = useMutation({
     mutationFn: async () => {
@@ -46,7 +63,7 @@ export function Page() {
   });
 
   return (
-    <div className="container">
+    <div className="container my-4">
       <h1 className="text-4xl font-bold">Horario EZ</h1>
       <p>
         Copia tu consolidado de matrícula del{" "}
@@ -95,7 +112,9 @@ export function Page() {
           onClick={() => createCalendarMutation.mutate()}
           size="lg"
           disabled={
-            parsedSchedule.length === 0 || createCalendarMutation.isPending
+            parsedSchedule.length === 0 ||
+            createCalendarMutation.isPending ||
+            isPaidQuery.data === false
           }
         >
           <Image
@@ -112,6 +131,25 @@ export function Page() {
             ))}
         </Button>
       </div>
+
+      {!isPaidQuery.isPending && isPaidQuery.data === false && (
+        <div className="flex flex-col items-center text-center text-muted-foreground mx-auto max-w-md space-y-2 my-8">
+          <p>
+            Hemos tenido muchas solicitudes recientemente y para poder escalar
+            este proyecto necesitamos tu apoyo.
+          </p>
+          <p className="text-primary-foreground">
+            Para continuar utilizando esta herramienta, por favor realiza un
+            pago de S/ 5.00 a la siguiente cuenta de Yape dejando tu correo en
+            la descripción.
+          </p>
+          <p>
+            *Si no puedes dejar mensajes (en el caso de Plin), puedes enviarme
+            un correo <span className="text-primary-foreground">(hi@caverne.io)</span> enviando un screenshot de tu pago.
+          </p>
+          <Image src={YapeQR} alt="Yape QR" width={200} height={200} />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,25 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co34loepe2mbada2trf0",
+    "operations": [
+      {
+        "add_column": {
+          "table": "users",
+          "column": {
+            "pk": false,
+            "name": "calendarCount",
+            "type": "bigint",
+            "unique": false,
+            "default": "'0'",
+            "nullable": false
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co34loepe2mbada2trf0",
+  "parent": "mig_co348cupe2mbada2trc0",
+  "startedAt": "2024-03-29T05:00:17.902625Z"
+}

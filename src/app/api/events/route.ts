@@ -27,10 +27,18 @@ export const POST = async (req: Request) => {
   }
 
   const oa = await xata.db.google_oauth_accounts.read(user.id);
+  const userXata = await xata.db.users.read(user.id);
 
   if (!oa) {
     return Response.json(
       { message: "No se encontró una cuenta de Google" },
+      { status: 400 }
+    );
+  }
+
+  if (!userXata?.isPaid) {
+    return Response.json(
+      { message: "Necesitas yapear 5 soles antes de continuar :D" },
       { status: 400 }
     );
   }
@@ -139,6 +147,13 @@ export const POST = async (req: Request) => {
         );
       })
     );
+
+    await userXata.update({
+      calendarCreated: true,
+      calendarCount: {
+        $increment: 1,
+      },
+    });
 
     return Response.json({ ok: true });
   } catch (error) {

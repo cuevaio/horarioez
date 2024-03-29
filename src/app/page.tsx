@@ -2,10 +2,14 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { ArrowBigDownIcon } from "lucide-react";
+import Image from "next/image";
+
+import { cn } from "@/lib/utils";
 import { GithubIcon } from "@/components/ui/github";
 import { Button } from "@/components/ui/button";
+import U1Img from "./u1.png";
+import U2Img from "./u2.jpeg";
 
 export default function Page() {
   return (
@@ -16,13 +20,39 @@ export default function Page() {
           width="640"
           height="360"
           src="https://www.youtube.com/embed/uQ-DevFsYHw"
-          title="Horario EZ en 120 segundos"
+          title="Horario EZ en 90 segundos"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
           className="mx-auto w-full sm:w-1/2 p-4"
         ></iframe>
       </div>
+
+      <div className="flex flex-col w-full items-center">
+        <h2 className="font-bold text-4xl italic text-primary text-center">
+          <span className="font-mono text-6xl">63</span> horarios creados
+        </h2>
+        <div className="grid grid-cols-3 w-2/3 gap-4 my-4">
+          <p className="p-6 bg-muted rounded-lg col-span-2">
+            Buenazo, Anthony. Demasiado útil. Muchas gracias!
+          </p>
+          <div className="">
+            <Image src={U1Img} alt="U1" className="rounded-full w-12 h-12" />
+            <p>Kevin D.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 w-2/3 gap-4 my-4">
+          <div className="flex flex-col items-end">
+            <Image src={U2Img} alt="U2" className="rounded-full w-12 h-12" />
+            <p>Mary M.</p>
+          </div>
+          <p className="p-6 bg-muted rounded-lg col-span-2">
+            Gracias Tony! Me salvaste la vida con esto. ¡Sigue así!
+          </p>
+        </div>
+      </div>
+
       <div className="flex items-center justify-center w-full my-5">
         <Button variant="secondary" asChild>
           <a
@@ -69,8 +99,8 @@ function LampDemo() {
       </motion.p>
 
       <motion.a
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         transition={{
           delay: 0.5,
           duration: 0.8,
