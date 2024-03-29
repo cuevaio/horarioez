@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Poppins as FontSans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/sonner";
 
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
 import { Providers } from "./providers";
-
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
