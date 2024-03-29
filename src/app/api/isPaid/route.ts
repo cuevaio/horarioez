@@ -12,5 +12,8 @@ export const GET = async () => {
   const xata = getXataClient();
   const userXata = await xata.db.users.read(user.id);
 
-  return Response.json({ isPaid: !!userXata?.isPaid });
+  return Response.json({
+    isPaid: !!userXata?.isPaid,
+    hasTested: !!userXata?.hasTested,
+  });
 };

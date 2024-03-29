@@ -120,7 +120,6 @@ export function parseSchedule(text: string) {
           }
         }
       } catch (e) {
-        console.error(e);
         continue;
       }
     }
@@ -131,13 +130,11 @@ export function parseSchedule(text: string) {
 
     const safeParseSchema = ScheduleSchema.safeParse(courses);
     if (!safeParseSchema.success) {
-      console.error(safeParseSchema.error.errors);
       return [];
     }
 
     return courses;
   } catch (e) {
-    console.error(e);
     return [];
   }
 }

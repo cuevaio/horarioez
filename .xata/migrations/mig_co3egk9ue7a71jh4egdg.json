@@ -1,0 +1,25 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_co3egk9ue7a71jh4egdg",
+    "operations": [
+      {
+        "add_column": {
+          "table": "users",
+          "column": {
+            "pk": false,
+            "name": "hasTested",
+            "type": "boolean",
+            "unique": false,
+            "default": "'false'",
+            "nullable": false
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_co3egk9ue7a71jh4egdg",
+  "parent": "mig_co34loepe2mbada2trf0",
+  "startedAt": "2024-03-29T16:12:02.789654Z"
+}

@@ -26,11 +26,12 @@ export function Page() {
         throw new Error(data.message);
       }
 
-      return data.isPaid as boolean;
+      return {
+        isPaid: data.isPaid as boolean,
+        hasTested: data.hasTested as boolean,
+      };
     },
   });
-
-  console.log(isPaidQuery);
 
   const createCalendarMutation = useMutation({
     mutationFn: async () => {
@@ -50,6 +51,36 @@ export function Page() {
     },
     onSuccess: () => {
       toast.success("Calendario creado exitosamente", {
+        action: {
+          label: "Ver",
+          onClick: () => {
+            window.open(
+              "https://calendar.google.com/calendar/u/0/r/week/2024/4/4"
+            );
+          },
+        },
+      });
+    },
+  });
+
+  const testProductMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch("/api/test-product", {
+        method: "POST",
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message);
+      }
+
+      return true;
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      toast.success("Calendario de prueba creado exitosamente", {
         action: {
           label: "Ver",
           onClick: () => {
@@ -107,14 +138,14 @@ export function Page() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-8 space-x-8">
         <Button
           onClick={() => createCalendarMutation.mutate()}
           size="lg"
           disabled={
             parsedSchedule.length === 0 ||
             createCalendarMutation.isPending ||
-            isPaidQuery.data === false
+            isPaidQuery.data?.isPaid === false
           }
         >
           <Image
@@ -130,9 +161,33 @@ export function Page() {
               <Loader2Icon className="w-4 h-4 inline-block ml-2 animate-spin" />
             ))}
         </Button>
+
+        <Button
+          onClick={() => testProductMutation.mutate()}
+          size="lg"
+          variant="secondary"
+          disabled={
+            testProductMutation.isPending ||
+            (isPaidQuery.data?.isPaid === false &&
+              isPaidQuery.data?.hasTested === true)
+          }
+        >
+          <Image
+            alt="Google logo"
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+            width={16}
+            height={16}
+            className="w-6 h-6 inline-block mr-2 bg-background rounded-full p-0.5"
+          />
+          Crear calendario de prueba
+          {parsedSchedule.length === 0 ||
+            (createCalendarMutation.isPending && (
+              <Loader2Icon className="w-4 h-4 inline-block ml-2 animate-spin" />
+            ))}
+        </Button>
       </div>
 
-      {!isPaidQuery.isPending && isPaidQuery.data === false && (
+      {!isPaidQuery.isPending && isPaidQuery.data?.isPaid === false && (
         <div className="flex flex-col items-center text-center text-muted-foreground mx-auto max-w-md space-y-2 my-8">
           <p>
             Hemos tenido muchas solicitudes recientemente y para poder escalar
@@ -145,7 +200,9 @@ export function Page() {
           </p>
           <p>
             *Si no puedes dejar mensajes (en el caso de Plin), puedes enviarme
-            un correo <span className="text-primary-foreground">(hi@caverne.io)</span> enviando un screenshot de tu pago.
+            un correo{" "}
+            <span className="text-primary-foreground">(hi@caverne.io)</span>{" "}
+            enviando un screenshot de tu pago.
           </p>
           <Image src={YapeQR} alt="Yape QR" width={200} height={200} />
         </div>

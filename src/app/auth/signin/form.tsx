@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 
 export function SignInForm() {
   const onGoogleSignInClicked = async () => {
-    console.debug("Google sign in clicked");
     const res = await createGoogleAuthorizationURL();
     if (res.error) {
       toast.error(res.error);
@@ -19,11 +18,7 @@ export function SignInForm() {
 
   return (
     <div className="w-full flex item-center justify-center">
-      <Button
-        onClick={onGoogleSignInClicked}
-        variant={"outline"}
-        className=""
-      >
+      <Button onClick={onGoogleSignInClicked} variant={"outline"} className="">
         <Image
           alt="Google logo"
           src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"

@@ -149,6 +149,13 @@ const tables = [
         defaultValue: null,
       },
       {
+        name: "hasTested",
+        type: "bool",
+        notNull: true,
+        unique: false,
+        defaultValue: "false",
+      },
+      {
         name: "isPaid",
         type: "bool",
         notNull: true,
