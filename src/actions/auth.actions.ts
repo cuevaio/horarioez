@@ -37,7 +37,7 @@ export const createGoogleAuthorizationURL = async () => {
   }
 };
 
-export const signOut = async () => {
+export const logOut = async () => {
   try {
     const { session } = await validateRequest();
 

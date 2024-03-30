@@ -12,6 +12,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import YapeQR from "./yape-qr.png";
 import ConsolidadoImg from "./consolidado.png";
+import LogOutButton from "@/components/log-out-button";
+import { is } from "@xata.io/client";
 
 export function Page() {
   const [rawSchedule, setRawSchedule] = React.useState("");
@@ -176,6 +178,7 @@ export function Page() {
           size="lg"
           variant="secondary"
           disabled={
+            parsedSchedule.length === 0 ||
             testProductMutation.isPending ||
             isPaidQuery.data?.hasTested === true
           }
@@ -189,7 +192,7 @@ export function Page() {
           />
           Crear calendario (semana 1)
           {parsedSchedule.length === 0 ||
-            (createCalendarMutation.isPending && (
+            (testProductMutation.isPending && (
               <Loader2Icon className="w-4 h-4 inline-block ml-2 animate-spin" />
             ))}
         </Button>
@@ -223,6 +226,10 @@ export function Page() {
           <Image src={YapeQR} alt="Yape QR" width={200} height={200} />
         </div>
       )}
+
+      <div className="flex justify-center">
+        <LogOutButton />
+      </div>
     </div>
   );
 }
