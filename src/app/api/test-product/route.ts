@@ -40,6 +40,13 @@ export const POST = async (req: Request) => {
     );
   }
 
+  if (userXata.hasTested) {
+    return Response.json(
+      { message: "Ya se ha creado el horario de la semana 1" },
+      { status: 400 }
+    );
+  }
+
   const Authorization = "Bearer " + oa.accessToken;
 
   const schedule = safeParsedSchedule.data;
@@ -53,7 +60,7 @@ export const POST = async (req: Request) => {
           Authorization,
           "content-type": "application/json",
         },
-        body: '{"summary":"Horario EZ"}',
+        body: '{"summary":"Horario EZ [Free]"}',
       }
     );
     const createCalendarData = await createCalendarResponse.json();
@@ -142,10 +149,7 @@ export const POST = async (req: Request) => {
     );
 
     await userXata.update({
-      calendarCreated: true,
-      calendarCount: {
-        $increment: 1,
-      },
+      hasTested: true,
     });
 
     return Response.json({ ok: true });
